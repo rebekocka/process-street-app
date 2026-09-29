@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CS Playbook | Rebeka Horváthová</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--card-bg);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        h1 { margin-top: 0; font-size: 1.8rem; }
+        h2 { color: var(--accent); margin-top: 2rem; font-size: 1.4rem; }
+        .subtitle { color: var(--text-muted); font-size: 1rem; }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+        }
+        .prompt-box {
+            background-color: #000;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        button:hover { background-color: #2563eb; }
+        .interactive-demo {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed #334155;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            background-color: #0f172a;
+            color: white;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+        #demo-result {
+            display: none;
+            background-color: #064e3b;
+            color: #d1fae5;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AI-Powered Customer Success Playbook</h1>
+        <div class="subtitle">Designed by Rebeka Horváthová | For Process Street</div>
+    </header>
+
+    <div class="container">
+        <p>This interactive repository showcases AI prompt architectures designed to eliminate operational friction, scale repeatable workflows, and proactively mitigate churn for Customer Success teams.</p>
+
+        <div class="card">
+            <h2>1. Churn-Risk Triage Engine</h2>
+            <p>Transforms emotional client text into a calm external response and a structured internal action list.</p>
+            <div class="prompt-box" id="prompt1">
+You are an expert Enterprise CSM specializing in retention. 
+Review the following frustrated client message: [INSERT MESSAGE]
+Generate: 
+1. THE CLIENT RESPONSE: A calm, professional reply setting realistic expectations.
+2. THE INTERNAL ACTION PLAN: 3-5 immediate steps for the team.
+            </div>
+            <button onclick="copyText('prompt1')">Copy Prompt</button>
+        </div>
+
+        <div class="card">
+            <h2>2. Transcript-to-SOP Pipeline</h2>
+            <p>Ingests raw meeting notes and distills them into trackable Process Street implementation checklists.</p>
+            <div class="prompt-box" id="prompt2">
+You are a Process Designer. 
+Analyze the following raw meeting transcript. Convert it into a structured Implementation Checklist including:
+- Account Objectives
+- Immediate Action Items [ ] 
+- Technical Blockers
+            </div>
+            <button onclick="copyText('prompt2')">Copy Prompt</button>
+        </div>
+
+        <div class="card interactive-demo">
+            <h2>Live Demo: Test the Triage Engine</h2>
+            <p>Paste a mock frustrated client message below to see how the AI system would structure it.</p>
+            <textarea id="demo-input" placeholder="e.g., We've been trying to set up our workflows for two weeks and nothing is saving correctly! Our team is extremely frustrated..."></textarea>
+            <button onclick="runDemo()">Generate AI Response Plan</button>
+            
+            <div id="demo-result">
+                <strong>[AI Output Generated]</strong><br><br>
+                <strong>Client Response:</strong> "Hi there, I completely understand your frustration. Getting these workflows properly saved is crucial for your team's rollout. I'm escalating this to our technical team right now to review your account logs..."<br><br>
+                <strong>Internal Action Items:</strong><br>
+                [ ] Check account ID logs for save-state errors.<br>
+                [ ] Sync with Support Eng on known browser caching bugs.<br>
+                [ ] Schedule 15-min screen share with client for tomorrow morning.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyText(elementId) {
+            var text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Prompt copied to clipboard!");
+            });
+        }
+        function runDemo() {
+            var input = document.getElementById('demo-input').value;
+            if(input.length > 5) {
+                document.getElementById('demo-result').style.display = 'block';
+            } else {
+                alert("Please enter a sample message first!");
+            }
+        }
+    </script>
+</body>
+</html>
